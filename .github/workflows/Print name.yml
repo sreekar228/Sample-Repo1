@@ -1,7 +1,10 @@
 name: Print My name
-on: 
+on:
   pull_request:
     types: [opened]
+  push:
+    branches:
+      - Feature-branch # Trigger on pushes to feature-branch
 
 jobs:
   print-name-and-merge:
@@ -22,3 +25,20 @@ jobs:
         git checkout -b Feature
         git merge --no-ff ${{ github.event.pull_request.head.ref }}
         git push origin main
+
+  create_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+ 
+    - name: Create Pull Request
+      uses: repo-sync/pull-request@v3
+      with:
+        destination_branch: "main" # Target branch to merge into
+        source_branch: "feature-branch" # Source branch to merge from
+        pr_title: "Automated Pull Request"
+        pr_body: "This is an automated pull request."
+        pr_label: "automerge" # Label to apply to the PR for auto-merging, or any other purposes
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+  
