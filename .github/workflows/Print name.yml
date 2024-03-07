@@ -30,10 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
  
     - name: Create Pull Request
-      uses: repo-sync/pull-request@v3
+      uses: repo-sync/pull-request@v2
       with:
         destination_branch: "main" # Target branch to merge into
         source_branch: "feature-branch" # Source branch to merge from
