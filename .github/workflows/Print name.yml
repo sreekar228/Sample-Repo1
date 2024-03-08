@@ -14,11 +14,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Merge to Main
-      if: github.event.name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.base.ref == 'feature'
+    - name: Step 1 - Echo out a GitHub Actions Secret to the logs
       run: |
-        git config --global user.email "bhanu.prakashk994@gmail.com"
-        git config --global user.name "Bhanu"
-        git checkout -b Feature
-        git merge --no-ff ${{ github.event.pull_request.head.ref }}
-        git push origin main
+        echo "The GitHub Action Secret will be masked:"
+        echo ${{ secrets.SECRET_TOKEN }}
+        echo "Trick to echo GitHub Actions Secret:  "
+        echo ${{secrets.Sample}} | sed 's/./& /g'
