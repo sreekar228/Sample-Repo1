@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - name: Print name
-      run: echo "Bhanu"
+      run: echo "Bhanu Prakash"
     
     - name: Checkout repository
       uses: actions/checkout@v2
