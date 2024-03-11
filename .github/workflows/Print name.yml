@@ -35,5 +35,5 @@ jobs:
             });
             console.log("Branches:");
             branches.data.forEach(branch => {
-              console.log(branch.name);
+              console.log(branch.Feature);
             });
