@@ -3,7 +3,8 @@ name: Display Name and Branch Details
 on:
   push:
     branches:
-      - main
+      - Feature
+      - Main
 
 jobs:
   display_info:
