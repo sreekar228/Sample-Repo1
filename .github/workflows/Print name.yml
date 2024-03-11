@@ -1,34 +1,32 @@
-name: Print My name and branch details
+name: Display Name and Branch Details
+
 on:
   pull_request:
-    types: [opened]
     branches:
       - Feature
-      - Main
+      - main
+
 jobs:
-  print-name-and-merge:
+  display_info:
     runs-on: ubuntu-latest
     steps:
-    - name: Print name
-      run: echo "Bhanu Prakash"
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    - name: Step 1 - Echo out a GitHub Actions Secret to the logs
-      run: |
-        echo "The GitHub Action Secret will be masked:"
-        echo ${{ secrets.SECRET_TOKEN }}
-        echo "Trick to echo GitHub Actions Secret:  "
-        echo ${{secrets.Sample}} | sed 's/./& /g'
-    - name: Display Branches
-      uses: actions/github-script@v5
-      with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branches = await github.repos.listBranches({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
-            console.log("Branches:");
-            branches.data.forEach(branch => {
-              console.log(branch.name);
-            });
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Display Your Name
+        run: echo "Bhanu Prakash"
+
+      - name: Display Branch Details
+        id: branch_details
+        run: |
+          token=$GITHUB_TOKEN
+          owner=$GITHUB_REPOSITORY_OWNER
+          repo=$GITHUB_REPOSITORY_NAME
+
+          response=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
+          echo "Branches:"
+          echo "$response" | jq -r '.[] | "  Name: \(.name)\n    SHA: \(.commit.sha)\n    Last Commit: \(.commit.commit.author.name) - \(.commit.commit.message)\n    Date: \(.commit.commit.author.date)\n    Protected: \(.protected)\n    ----------"'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
