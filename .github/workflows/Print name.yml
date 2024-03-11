@@ -28,7 +28,3 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo
             });
-            echo "Branches:";
-            branches.data.forEach(branch => {
-              echo branch.name;
-            });
