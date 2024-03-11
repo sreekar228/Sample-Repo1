@@ -1,37 +1,32 @@
-name: Print My name and branch details
+name: Display Branches with PowerShell
+
 on:
-  pull_request:
-    types: [opened]
+  push:
     branches:
       - Feature
-      - Main
- 
+      - Feature-1
+      - main
+
 jobs:
-  print-name-and-merge:
+  display_info:
     runs-on: ubuntu-latest
- 
     steps:
-    - name: Print name
-      run: echo "Bhanu Prakash"
-    - name: Checkout repository
-      uses: actions/checkout@v2
- 
-    - name: Step 1 - Echo out a GitHub Actions Secret to the logs
-      run: |
-        echo "The GitHub Action Secret will be masked:"
-        echo ${{ secrets.SECRET_TOKEN }}
-        echo "Trick to echo GitHub Actions Secret:  "
-        echo ${{secrets.Sample}} | sed 's/./& /g'
-    - name: Display Branches
-      uses: actions/github-script@v5
-      with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branches = await github.repos.listBranches({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
-            console.log("Branches:");
-            branches.data.forEach(branch => {
-              console.log(branch.name);
-            });
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Display Branches
+        shell: pwsh
+        run: |
+          $token = $env:GITHUB_TOKEN
+          $owner = $env:GITHUB_REPOSITORY_OWNER
+          $repo = $env:GITHUB_REPOSITORY_NAME
+
+          $url = "https://api.github.com/repos/$owner/$repo/branches"
+          $branches = Invoke-RestMethod -Uri $url -Headers @{
+            Authorization = "Bearer $token"
+          }
+
+          Write-Host "Branches:"
+          $branches | ForEach-Object {
+            Write-Host $_.name
+          }
