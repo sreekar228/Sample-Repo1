@@ -1,4 +1,4 @@
-name: Print My name
+name: Print My name and branch details
 on:
   pull_request:
     types: [opened]
