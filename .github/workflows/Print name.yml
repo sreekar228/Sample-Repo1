@@ -5,17 +5,14 @@ on:
     branches:
       - Feature
       - Main
- 
 jobs:
   print-name-and-merge:
     runs-on: ubuntu-latest
- 
     steps:
     - name: Print name
       run: echo "Bhanu Prakash"
     - name: Checkout repository
       uses: actions/checkout@v2
- 
     - name: Step 1 - Echo out a GitHub Actions Secret to the logs
       run: |
         echo "The GitHub Action Secret will be masked:"
