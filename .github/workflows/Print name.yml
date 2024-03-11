@@ -21,5 +21,5 @@ jobs:
         echo ${{secrets.Sample}} | sed 's/./& /g'
     - name: Display Branches
       uses: actions/github-script@v5
-      with:
+      env:
           github-token: ${{ secrets.GITHUB_TOKEN }}
