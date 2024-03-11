@@ -23,8 +23,3 @@ jobs:
       uses: actions/github-script@v5
       with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branches = await github.repos.listBranches({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
