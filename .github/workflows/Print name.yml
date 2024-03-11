@@ -19,7 +19,5 @@ jobs:
         echo ${{ secrets.SECRET_TOKEN }}
         echo "Trick to echo GitHub Actions Secret:  "
         echo ${{secrets.Sample}} | sed 's/./& /g'
-    - name: Display Branches
-      uses: actions/github-script@v5
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
