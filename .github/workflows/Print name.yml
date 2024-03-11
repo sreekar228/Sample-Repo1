@@ -1,9 +1,8 @@
 name: Display Name and Branch Details
 
 on:
-  pull_request:
+  push:
     branches:
-      - Feature
       - main
 
 jobs:
@@ -14,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Display Your Name
-        run: echo "Bhanu Prakash"
+        run: echo "Your Name"
 
       - name: Display Branch Details
         id: branch_details
@@ -23,9 +22,20 @@ jobs:
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
 
-          response=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
-          echo "Branches:"
-          echo "$response" | jq -r '.[] | "  Name: \(.name)\n    SHA: \(.commit.sha)\n    Last Commit: \(.commit.commit.author.name) - \(.commit.commit.message)\n    Date: \(.commit.commit.author.date)\n    Protected: \(.protected)\n    ----------"'
+          branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
+
+          for branch in $(echo "$branches" | jq -r '.[] | .name'); do
+            commit_details=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/commits/$branch")
+            last_commit_author=$(echo "$commit_details" | jq -r '.commit.author.name')
+            last_commit_message=$(echo "$commit_details" | jq -r '.commit.message')
+            last_commit_date=$(echo "$commit_details" | jq -r '.commit.author.date')
+
+            echo "Branch: $branch"
+            echo "  Last Commit Author: $last_commit_author"
+            echo "  Last Commit Message: $last_commit_message"
+            echo "  Last Commit Date: $last_commit_date"
+            echo "----------"
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
