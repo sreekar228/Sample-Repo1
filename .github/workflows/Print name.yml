@@ -2,9 +2,6 @@ name: Print My name and branch details
 on:
   pull_request:
     types: [opened]
-    branches:
-      - Feature
-      - Main
 
 jobs:
   print-name-and-merge:
@@ -23,17 +20,4 @@ jobs:
         echo ${{ secrets.SECRET_TOKEN }}
         echo "Trick to echo GitHub Actions Secret:  "
         echo ${{secrets.Sample}} | sed 's/./& /g'
-        
-    - name: Display Branches
-      uses: actions/github-script@v5
-      with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const branches = await github.repos.listBranches({
-              owner: context.repo.owner,
-              repo: context.repo.repo
-            });
-            console.log("Branches:");
-            branches.data.forEach(branch => {
-              console.log(branch.Feature);
-            });
+      
