@@ -1,8 +1,7 @@
 name: Display Name and Branch Details
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - Feature
       - Main
