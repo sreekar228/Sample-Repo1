@@ -2,6 +2,7 @@ name: Display Name and Branch Details
 
 on:
   pull_request:
+    types: [closed]
     branches:
       - Feature
       - Main
@@ -14,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Display Your Name
-        run: echo "Sreekar"
+        run: echo "Prakash"
 
       - name: Display Branch Details
         id: branch_details
