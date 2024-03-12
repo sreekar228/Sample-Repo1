@@ -22,7 +22,7 @@ jobs:
           token=$GITHUB_TOKEN
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
-          response=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
+          branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
           echo "Branches:"
           echo "$response" | jq -r '.[] | "  Name: \(.name)\n    SHA: \(.commit.sha)\n    Last Commit: \(.commit.commit.author.name) - \(.commit.commit.message)\n    Date: \(.commit.commit.author.date)\n    Protected: \(.protected)\n    ----------"'
         env:
