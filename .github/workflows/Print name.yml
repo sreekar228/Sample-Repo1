@@ -3,7 +3,6 @@ name: Display Name and Branch Details
 on:
   push:
     branches:
-      - Feature
       - main
 
 jobs:
@@ -30,3 +29,14 @@ jobs:
             last_commit_author=$(echo "$commit_details" | jq -r '.commit.author.name')
             last_commit_message=$(echo "$commit_details" | jq -r '.commit.message')
             last_commit_date=$(echo "$commit_details" | jq -r '.commit.author.date')
+
+            echo "Branch: $branch"
+            echo "  Last Commit Author: $last_commit_author"
+            echo "  Last Commit Message: $last_commit_message"
+            echo "  Last Commit Date: $last_commit_date"
+            echo "----------"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
