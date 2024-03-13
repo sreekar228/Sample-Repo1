@@ -9,6 +9,8 @@ on:
 jobs:
   display_info:
     runs-on: ubuntu-latest
+    env:
+      Greeting: creating a variable
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -16,8 +18,14 @@ jobs:
       - name: Display Your Name
         run: echo "Prakash"
 
+      - name: "Say Hello Sreekar it's Monday"
+        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+        env:
+          First_Name: Sreekar
+
       - name: Display Branch Details
         id: branch_details
+        
         run: |
           token=$GITHUB_TOKEN
           owner=$GITHUB_REPOSITORY_OWNER
