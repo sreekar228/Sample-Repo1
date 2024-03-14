@@ -22,6 +22,7 @@ jobs:
         run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
         env:
           First_Name: Sreekar
+          DAY_OF_WEEK: Monday
 
       - name: Display Branch Details
         id: branch_details
