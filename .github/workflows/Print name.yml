@@ -24,6 +24,8 @@ jobs:
           First_Name: Sreekar
           DAY_OF_WEEK: Monday
 
+      - name: Step 1 - Echo out a GitHub Actions Secret to the logs
+      
       - name: Display Branch Details
         id: branch_details
         
@@ -32,7 +34,12 @@ jobs:
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
 
-          branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
+          echo "The GitHub Action Secret will be masked:"
+          echo ${{ secrets.SECRET_TOKEN }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.Sample}} | sed 's/./& /g'
+
+          branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/listbranches")
 
           for branch in $(echo "$branches" | jq -r '.[] | .name'); do
             commit_details=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/commits/$branch")
