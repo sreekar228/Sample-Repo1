@@ -25,15 +25,15 @@ jobs:
           DAY_OF_WEEK: Monday
 
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
-      
-      - name: Display Branch Details
-        id: branch_details
-        
-        run: |
           token=$GITHUB_TOKEN
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
 
+      - name: Display Branch Details
+        id: branch_details
+        
+        run: |
+          
           echo "The GitHub Action Secret will be masked:"
           echo ${{ secrets.SECRET_TOKEN }}
           echo "Trick to echo GitHub Actions Secret:  "
