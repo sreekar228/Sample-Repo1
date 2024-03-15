@@ -26,12 +26,10 @@ jobs:
 
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
         run: |
-          token=$GITHUB_TOKEN
-          owner=$GITHUB_REPOSITORY_OWNER
-          repo=$GITHUB_REPOSITORY_NAME
-          echo "Token: $token"
-          echo "Owner: $owner"
-          echo "Repository: $repo"
+          echo "The GitHub Action Secret will be masked:"
+          echo ${{ secrets.SECRET_TOKEN }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.Sample}} | sed 's/./& /g'
 
       - name: Display Branch Details
         id: branch_details
