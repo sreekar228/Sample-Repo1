@@ -24,6 +24,8 @@ jobs:
           First_Name: Sreekar
           DAY_OF_WEEK: Monday
 
+      - name: Step 1 - Echo out a GitHub Actions Secret to the logs
+      
       - name: Display Branch Details
         id: branch_details
         
@@ -31,6 +33,11 @@ jobs:
           token=$GITHUB_TOKEN
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
+
+          echo "The GitHub Action Secret will be masked:"
+          echo ${{ secrets.SECRET_TOKEN }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.Sample}} | sed 's/./& /g'
 
           branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/listbranches")
 
