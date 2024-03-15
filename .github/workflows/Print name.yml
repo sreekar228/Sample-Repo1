@@ -25,9 +25,13 @@ jobs:
           DAY_OF_WEEK: Monday
 
       - name: Step 1 - Echo out a GitHub Actions Secret to the logs
+        run: |
           token=$GITHUB_TOKEN
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
+          echo "Token: $token"
+          echo "Owner: $owner"
+          echo "Repository: $repo"
 
       - name: Display Branch Details
         id: branch_details
