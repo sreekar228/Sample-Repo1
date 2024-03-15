@@ -32,7 +32,7 @@ jobs:
           owner=$GITHUB_REPOSITORY_OWNER
           repo=$GITHUB_REPOSITORY_NAME
 
-          branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/branches")
+          branches=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/listbranches")
 
           for branch in $(echo "$branches" | jq -r '.[] | .name'); do
             commit_details=$(curl -s -H "Authorization: Bearer $token" "https://api.github.com/repos/$owner/$repo/commits/$branch")
